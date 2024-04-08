@@ -1,4 +1,4 @@
-// Your code here
+
 // Your code here
 let url = "http://localhost:3000/films/";
 let ulFilms = document.getElementById("films");
@@ -11,9 +11,6 @@ let idFilmInfo = document.getElementById("film-info")
 let idShowtime = document.getElementById("showtime")
 let idTicketnum = document.getElementById("ticket-num")
 
-function show(value){
-    console.log(value);
-}
 
 function grabMovie(){
     fetch(url)
@@ -25,7 +22,7 @@ function grabMovie(){
         }
         }
     )
-    .catch(e => show(e.message));
+    .catch(e => console.log(e.message));
 }
 grabMovie();
 function addMovie(movies){
@@ -84,14 +81,15 @@ function updateDom(movies){
         { 
              buyTicket(movies)
         }else{
-            show("You cannot buy tickets")
+            console.log("You cannot buy tickets")
         }
     };
     idBuyticket.dataset.movieId = movies.id;
-    let button = document.querySelector([data-movie-id="${movieId}"]);
+    let button = document.querySelector("[data-movie-id='"+movieId+"']");
     button.innerText = availabiity;
 }
 function buyTicket(movies){
+
     movies.tickets_sold++
     let ticketsSold = movies.tickets_sold;
     let requestHeaders = {
@@ -127,13 +125,11 @@ function buyTicket(movies){
         })
         .then (res => res.json())
         .then(data => data)
-        .catch (e => show(e.message));
+        .catch (e => console.log(e.message));
 
     })
-    .catch (e => show(e.message));
+    .catch (e => console.log(e.message));
 }
-
-
 function deleteMovie(movie){
     let requestHeaders = {
         "Content-Type": "application/json"
@@ -148,5 +144,5 @@ function deleteMovie(movie){
     })
     .then (res => res.json())
     .then (data => grabMovie())
-    .catch (e => show(e.message));
+    .catch (e => console.log(e.message));
 }
